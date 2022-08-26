@@ -6,11 +6,12 @@ from fabric.api import env, put, run
 env.hosts = ['54.173.35.192', '54.221.151.240']
 env.user = 'ubuntu'
 
+
 def do_deploy(archive_path):
     """distributes an archive to the web servers"""
     if exists(archive_path) is False:
         return False
-try:
+    try:
 
         # web_static_20170315003959.tgz
         only_file = archive_path.split("/")[-1]
