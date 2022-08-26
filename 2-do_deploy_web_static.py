@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """script that deploy archive!"""
 
-from os.path import exists
-from fabric.api import env, put, run
+from fabric.api import env, local, put, run
+from datetime import datetime
 env.hosts = ['54.173.35.192', '54.221.151.240']
 env.user = 'ubuntu'
 
