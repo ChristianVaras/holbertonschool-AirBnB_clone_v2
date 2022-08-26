@@ -5,6 +5,7 @@ from datetime import datetime
 env.hosts = ['54.173.35.192', '54.221.151.240']
 env.user = 'ubuntu'
 
+
 @runs_once
 def do_pack():
     """function that generates tgz archive"""
