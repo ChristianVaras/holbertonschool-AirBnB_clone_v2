@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """script that generates a tgz archive"""
-from fabric.api import *
+from fabric.api import local
 from datetime import datetime
 
 
