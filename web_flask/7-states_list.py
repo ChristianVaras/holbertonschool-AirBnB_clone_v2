@@ -17,7 +17,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def close_db(self):
+def close_session(self):
     """Close SLQAlchemy session"""
     storage.close()
 
