@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
-from contextlib import AsyncExitStack
 import sys
 import re
 from models.base_model import BaseModel
@@ -40,7 +39,6 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
-
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
         """
@@ -123,8 +121,6 @@ class HBNBCommand(cmd.Cmd):
 
         if (obj is not None):
             obj = list(obj.groups())
-            # print(obj)
-
             if (re.search(r"^\".+\"$", obj[1]) is not None):
                 obj[1] = obj[1][1:-1]
 
@@ -189,12 +185,11 @@ class HBNBCommand(cmd.Cmd):
             regex_res = self.regex_arguments(arguments[key_value])
 
             if (regex_res is None):
-                # print("Format wrong")
                 continue
 
-            # if (not hasattr(self.classes[arguments[0]], regex_res[0])):
-            #     print("attributte doesn't exist in the class")
-            #     continue
+            if (not hasattr(self.classes[arguments[0]], regex_res[0])):
+                print("attributte doesn't exist in the class")
+                continue
 
             # if (isinstance(type(self.classes[arguments[0]].__dict__
             #                [regex_res[0]]), type(regex_res[1]))):

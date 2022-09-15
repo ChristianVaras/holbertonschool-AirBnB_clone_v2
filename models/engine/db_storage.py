@@ -35,20 +35,20 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
-        final_dict = {}
+        all_dict = {}
         if (cls is None):
             for v in classes.values():
                 result = self.__session.query(v).all()
                 for row in result:
                     key_dict = row.__class__.__name__ + '.' + row.id
-                    final_dict[key_dict] = row
+                    all_dict[key_dict] = row
         else:
             result = self.__session.query(cls).all()
             for row in result:
                 key_dict = row.__class__.__name__ + '.' + row.id
-                final_dict[key_dict] = row
+                all_dict[key_dict] = row
 
-        return (final_dict)
+        return (all_dict)
 
     def new(self, obj):
         """add the object to the current database session """
@@ -59,17 +59,17 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj):
-        """ delete from the current database session"""
+        """Delete from the current database session"""
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
         """create all tables in the database"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(
+        session_f = sessionmaker(
             bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(session_factory)
-        self.__session = Session
+        Session = scoped_session(session_f)
+        self.__session = Session()
 
     def close(self):
         """Remove private session attribute"""
