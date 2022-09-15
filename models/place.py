@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+from os import getenv
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
@@ -7,22 +8,16 @@ from models.review import Review
 from models.amenity import Amenity
 import models
 
-if models.storage_type == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60),
-                                 ForeignKey('places.id', onupdate='CASCADE',
-                                 ondelete='CASCADE'), primary_key=True),
-                          Column('amenity_id', String(60),
-                                 ForeignKey('amenities.id', onupdate='CASCADE',
-                                            ondelete='CASCADE'),
-                                 primary_key=True))
-
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'), nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'), nullable=False))
 
 class Place(BaseModel, Base):
     """ A place to stay """
-
-    if models.storage_type == 'db':
-        __tablename__ = 'places'
+    __tablename__ = 'places'
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
@@ -82,8 +77,6 @@ class Place(BaseModel, Base):
         # @amenities.setter
         # def amenities(self, obj=None):
         #     """"""
-
-
         #     if (obj is not None):
         #         cls_name = obj.__class__.__name__
         #         if (cls_name == 'Amenity' and obj.id not in self.amenity_ids):
